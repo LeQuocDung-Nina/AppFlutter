@@ -1,23 +1,27 @@
 import 'package:demorivermod/home/model/home_model.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
 import '../../color.dart';
 import '../../product_detail/product_detail.dart';
 import '../../utils/helpers.dart';
 
-class ProductItem extends StatefulWidget {
+
+
+class ProductItem extends ConsumerStatefulWidget {
+  const ProductItem( {
+  Key? key,
+    required this.product
+  }) : super(key: key);
 
   final ProductModel product;
 
-  const ProductItem({Key? key, required this.product}) : super(key: key);
-
   @override
-  State<ProductItem> createState() => _ProductItemState();
+  ConsumerState createState() => _ProductItemState();
 }
 
-class _ProductItemState extends State<ProductItem> {
+class _ProductItemState extends ConsumerState<ProductItem> {
   final Box boxFav = Hive.box('favorites');
   bool isFav = false;
 
