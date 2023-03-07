@@ -1,6 +1,7 @@
 import 'package:demorivermod/home/model/home_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 
 import '../../color.dart';
@@ -25,11 +26,15 @@ class _ProductItemState extends ConsumerState<ProductItem> {
   final Box boxFav = Hive.box('favorites');
   bool isFav = false;
 
+  late String id = "";
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     isFav = Helpers.checkIsFav(id: widget.product.id.toString(), listFav: (boxFav.get('list_product_fav') as String).split(','));
+    id = widget.product.id.toString();
   }
 
   @override
@@ -40,8 +45,7 @@ class _ProductItemState extends ConsumerState<ProductItem> {
       children: [
         GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProductDetail(product: widget.product),),);
+              GoRouter.of(context).push('/product-detail/$id');
             },
             child: Image.network(widget.product.photo.toString(),width: double.maxFinite,height: 210,fit: BoxFit.fill,)
         ),

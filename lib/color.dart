@@ -9,3 +9,7 @@ const color_lqd6 = Color(0xFF979797);
 const color_lqd7 = Color(0xFFF1EFEF);
 const color_lqd8 = Color(0xFF222222);
 const color_lqd9 = Color(0xFFF5F5F5);
+const color_lqd10 = Color(0xFFDDDDE3);
+const color_lqd11 = Color(0xFF171717);
+const color_lqd12 = Color(0xFF7A7D8A);
+const color_lqd13 = Color(0xFFF2F2F2);

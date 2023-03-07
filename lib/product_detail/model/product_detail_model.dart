@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
-class ProductModel  {
+class ProductDetailModel  {
 
-  ProductModel(
+  ProductDetailModel(
       {this.id,
         this.namevi,
         this.descvi,
@@ -21,7 +21,7 @@ class ProductModel  {
   String? idList;
   String? photo;
 
-  ProductModel copyWith({
+  ProductDetailModel copyWith({
     String? id,
     String? namevi,
     String? descvi,
@@ -31,7 +31,7 @@ class ProductModel  {
     String? idList,
     String? photo,
   }) {
-    return ProductModel(
+    return ProductDetailModel(
       id: id ?? this.id,
       namevi: namevi ?? this.namevi,
       descvi: descvi ?? this.descvi,
@@ -54,7 +54,7 @@ class ProductModel  {
   //   idList
   // ];
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
+  ProductDetailModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     namevi = json['namevi'];
     descvi = json['descvi'];

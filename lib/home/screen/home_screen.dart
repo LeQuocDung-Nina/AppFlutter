@@ -1,11 +1,12 @@
 
-import 'package:demorivermod/home/model/home_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import '../model/home_model.dart';
 import '../provider/home_provider.dart';
 import '../widget/appbarhome.dart';
 import '../widget/product_home_item.dart';
@@ -38,37 +39,27 @@ class _Product extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final productApiProvider = ref.watch(productProvider);
+    final products = ref.watch(productProvider);
+    print('products: ${products.listProducts}');
 
-    return productApiProvider.when(
-        data: (data){
-          List<ProductModel>? listProducts = data;
+    return (products.listProducts != null && products.listProducts!.isNotEmpty)
+        ? ValueListenableBuilder(
+          valueListenable: Hive.box('favorites').listenable(),
+          builder: (BuildContext context, box, Widget? child) {
 
-          if(listProducts!=null){
-            return ValueListenableBuilder(
-              valueListenable: Hive.box('favorites').listenable(),
-              builder: (BuildContext context, box, Widget? child) {
-
-                return AlignedGridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    // itemCount: 6,
-                    itemCount: listProducts.length,
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                    itemBuilder: (context, index) =>  ProductItem(product: listProducts[index]),
-                );
-              },
+            return AlignedGridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                // itemCount: 6,
+                itemCount: products.listProducts!.length.ceil(),
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+                itemBuilder: (context, index) =>  ProductItem(product: products.listProducts![index]),
             );
-          }
-          return Text('du lieu rong');
-        },
-        error: (error, stackTrace) => Text(error.toString()),
-        loading: () => const CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation(Colors.black),
-        ),
-    );
+          },
+          )
+        : const CircularProgressIndicator();
   }
 }
 

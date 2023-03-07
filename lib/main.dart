@@ -7,12 +7,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import 'product_detail/adapter/Item_cart_hive.dart';
 
 
 
-Future<void> main() async {
+
+
+main() async {
   await Hive.initFlutter() ;
   await Hive.openBox('favorites');
+
+  Hive.registerAdapter(ItemCartHiveAdapter());
+  await Hive.openBox('person_listCart');
+
   runApp(const ProviderScope(child: MyApp()));
   // runApp(MyApp());
 }
