@@ -1,11 +1,14 @@
-import 'package:demorivermod/utils/helpers.dart';
+
+import 'package:demorivermod/cart/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:hive/hive.dart';
 
-import '../cart/provider/cart_state.dart';
+
+import '../cart/model/cart_model.dart';
 import '../color.dart';
+import '../router.dart';
 import 'container/detail_container.dart';
 import 'model/product_detail_model.dart';
 import 'repository/product_detail_repository.dart';
@@ -19,7 +22,6 @@ class ProductDetail extends ConsumerStatefulWidget {
 
 
 
-
   // final double _rating = 4;
   @override
   ConsumerState createState() => _ProductDetailState();
@@ -29,8 +31,9 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
 
   late final Box box;
 
-
   late final Future<ProductDetailModel> productDetail;
+
+
 
   @override
   void initState() {
@@ -39,15 +42,15 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
     productDetail = ProductDetailService.instance.getProductDetail(int.parse(widget.idProduct));
   }
 
-  final quantityProvider = StateNotifierProvider<CartContainer,int>((ref)=>CartContainer());
+  // final quantityProvider = StateNotifierProvider<CartContainer,int>((ref)=>CartContainer());
 
   @override
   Widget build(BuildContext context) {
 
-    final counter = ref.watch(quantityProvider);
-    final quantity = counter + 1;
+    // final counter = ref.watch(quantityProvider);
+    // final quantity = counter + 1;
 
-    // final Box boxCart = Hive.box('person_listCart');
+    // final Box boxCart = Hive.box('box_listCart');
 
     return Scaffold(
       appBar: AppBar(
@@ -188,27 +191,7 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 25,),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(onPressed: () {
-                              ref.read(quantityProvider.notifier).removeQuantity();
-                            },
-                              child: const Text("-"),
-                            ),
-                            Center(
-                              widthFactor: 5,
-                              child: Text('$quantity'),
-                            ),
-                            ElevatedButton(onPressed: () {
-                              ref.read(quantityProvider.notifier).addQuantity();
-                            },
-                              child: const Text("+"),
-                            ),
-                          ],
-                        ),
                         SizedBox(height: 25,),
                         Row(
                           children: [
@@ -223,21 +206,7 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
                             const SizedBox(width: 20,),
                             Expanded(
                               flex: 2,
-                              child: ElevatedButton(
-                                onPressed: (){
-                                  // Helpers.addCart(
-                                  //     id: product?.id ?? '',
-                                  //     namevi: product?.namevi ?? '',
-                                  //     regular_price: product?.regularPrice ?? '',
-                                  //     photo: product?.photo ?? '',
-                                  //     quantity: quantity.toString(),
-                                  //     boxCart: boxCart);
-                                },
-                                style: ElevatedButton.styleFrom(primary: color_lqd1,minimumSize: const Size(100, 55)),
-                                child: const Center(
-                                  child: Text("Mua ngay",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17),),
-                                ),
-                              ),
+                              child: _BuildAddCartWidget(product!),
                             ),
                           ],
                         ),
@@ -255,7 +224,34 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
       ),
     );
   }
+}
 
+class _BuildAddCartWidget extends ConsumerWidget {
+  const _BuildAddCartWidget(this.product, {
+    Key? key,
+  }) : super(key: key);
+
+  final ProductDetailModel product;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ElevatedButton(
+      onPressed: (){
+        ref.read(cartProvider.notifier).addCart(
+            item: CartModel(
+                id: product?.id ?? '',
+                namevi: product?.namevi ?? '',
+                regular_price: product?.regularPrice ?? '',
+                photo: product?.photo ?? '',
+                quantity: '1' ?? ''));
+        // context.push(AppRouter.cartScreen);
+      },
+      style: ElevatedButton.styleFrom(primary: color_lqd1,minimumSize: const Size(100, 55)),
+      child: const Center(
+        child: Text("Mua ngay",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17),),
+      ),
+    );
+  }
 }
 
 

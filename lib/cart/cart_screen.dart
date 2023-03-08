@@ -15,6 +15,8 @@ class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
 
 
+
+
   @override
   ConsumerState createState() => _CartScreenState();
 }
@@ -26,35 +28,29 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Future.delayed(const Duration(milliseconds: 1),(){
+      ref.read(cartProvider.notifier).checkAll(isChecked: false);
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
-    final cartBox = ref.watch(CartProvider);
-    print('carts: ${cartBox.listCarts}');
+    final stateCart = ref.watch(cartProvider);
+    final totalItem = ref.read(cartProvider.notifier).totalItemsCart();
+
+    // int totalItem = 0;
+    // Future.delayed(const Duration(milliseconds: 2),(){
+    //   totalItem = ref.read(cartProvider.notifier).totalItemsCart();
+    // });
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text("Giỏ hàng",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 19,color: color_lqd8),),
       ),
-      body: SingleChildScrollView(
-        child: (cartBox.listCarts != null && cartBox.listCarts!.isNotEmpty)
-          ? ValueListenableBuilder(
-        valueListenable: Hive.box('person_listCart').listenable(),
-        builder: (BuildContext context, box, Widget? child) {
-          return AlignedGridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: cartBox.listCarts!.length.ceil(),
-            crossAxisCount: 2,
-            mainAxisSpacing: 20,
-            crossAxisSpacing: 20,
-            itemBuilder: (context, index) =>  CartItem(cart: cartBox.listCarts![index]),
-          );
-        },
-      )
-          : const CircularProgressIndicator(),
+      body: Container(padding: EdgeInsets.symmetric(horizontal: 20),
+          child: SingleChildScrollView(child: _BuildListCart(),)
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.symmetric(vertical: 20,horizontal: 20),
@@ -65,17 +61,21 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           children: [
             Row(
               children: [
-                GFCheckbox(
-                  size: 28,
-                  activeBgColor: GFColors.DANGER,
-                  // type: GFCheckboxType.square,
-                  onChanged: (value) {
-                    setState(() {
-                      isChecked = value;
-                    });
+                Consumer(
+                  builder: (context, ref, child) {
+                    final stateCart = ref.watch(cartProvider);
+                    final bool isChecked = (stateCart.selectItems!=null && stateCart.selectItems?.length==stateCart.listCarts?.length);
+                    return GFCheckbox(
+                      size: 28,
+                      activeBgColor: GFColors.DANGER,
+                      // type: GFCheckboxType.square,
+                      onChanged: (value) {
+                        ref.read(cartProvider.notifier).checkAll(isChecked: isChecked);
+                      },
+                      value: isChecked,
+                      inactiveIcon: null,
+                    );
                   },
-                  value: isChecked,
-                  inactiveIcon: null,
                 ),
                 Text("Tất cả",style: TextStyle(color: color_lqd11,fontSize: 15,fontWeight: FontWeight.w400),)
               ],
@@ -85,20 +85,20 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     text: "Tạm tính: ",
                     style: TextStyle(color: color_lqd1,fontWeight: FontWeight.w700,fontSize: 16),
                     children: [
-                      TextSpan(text: "290000"),
+                      TextSpan(text: stateCart.totalPrice.toString()),
                       TextSpan(text: "đ"),
                     ]),
                 ),
                 RichText(
-                  text: const TextSpan(
+                  text:  TextSpan(
                       text: "(",
                       style: TextStyle(color: color_lqd12,fontSize: 13),
                       children: [
-                        TextSpan(text: "1 "),
+                        TextSpan(text: '${totalItem.toString()}'),
                         TextSpan(text: "Sản phẩm)"),
                       ]),
                 ),
@@ -117,6 +117,35 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+
+class _BuildListCart extends ConsumerWidget {
+  const _BuildListCart({
+    Key? key,
+  }) : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cartBox = ref.watch(cartProvider);
+    final listCarts = cartBox.listCarts!;
+
+    return listCarts.length > 0
+        ? ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: listCarts.length,
+          separatorBuilder: (context, index) => const Divider(height: 30),
+          itemBuilder: (context, index) {
+            final itemCartModel = listCarts[index];
+            return CartItem(cart: itemCartModel);
+          },
+        )
+        : const Center(
+      child: Text('Chưa có sản phẩm nào trong giỏ hàng'),
     );
   }
 }

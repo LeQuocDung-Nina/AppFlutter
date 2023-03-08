@@ -18,7 +18,7 @@ main() async {
   await Hive.openBox('favorites');
 
   Hive.registerAdapter(ItemCartHiveAdapter());
-  await Hive.openBox('person_listCart');
+  await Hive.openBox('box_listCart');
 
   runApp(const ProviderScope(child: MyApp()));
   // runApp(MyApp());

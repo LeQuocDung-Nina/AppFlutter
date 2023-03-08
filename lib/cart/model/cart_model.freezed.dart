@@ -21,7 +21,8 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CartModel {
   String get id => throw _privateConstructorUsedError;
-  String get regularPrice => throw _privateConstructorUsedError;
+  String get regular_price => throw _privateConstructorUsedError;
+  String get quantity => throw _privateConstructorUsedError;
   String get photo => throw _privateConstructorUsedError;
   String get namevi => throw _privateConstructorUsedError;
 
@@ -36,7 +37,12 @@ abstract class $CartModelCopyWith<$Res> {
   factory $CartModelCopyWith(CartModel value, $Res Function(CartModel) then) =
       _$CartModelCopyWithImpl<$Res, CartModel>;
   @useResult
-  $Res call({String id, String regularPrice, String photo, String namevi});
+  $Res call(
+      {String id,
+      String regular_price,
+      String quantity,
+      String photo,
+      String namevi});
 }
 
 /// @nodoc
@@ -53,7 +59,8 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
   @override
   $Res call({
     Object? id = null,
-    Object? regularPrice = null,
+    Object? regular_price = null,
+    Object? quantity = null,
     Object? photo = null,
     Object? namevi = null,
   }) {
@@ -62,9 +69,13 @@ class _$CartModelCopyWithImpl<$Res, $Val extends CartModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      regularPrice: null == regularPrice
-          ? _value.regularPrice
-          : regularPrice // ignore: cast_nullable_to_non_nullable
+      regular_price: null == regular_price
+          ? _value.regular_price
+          : regular_price // ignore: cast_nullable_to_non_nullable
+              as String,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
               as String,
       photo: null == photo
           ? _value.photo
@@ -85,7 +96,12 @@ abstract class _$$_CartModelCopyWith<$Res> implements $CartModelCopyWith<$Res> {
       __$$_CartModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String regularPrice, String photo, String namevi});
+  $Res call(
+      {String id,
+      String regular_price,
+      String quantity,
+      String photo,
+      String namevi});
 }
 
 /// @nodoc
@@ -100,7 +116,8 @@ class __$$_CartModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? regularPrice = null,
+    Object? regular_price = null,
+    Object? quantity = null,
     Object? photo = null,
     Object? namevi = null,
   }) {
@@ -109,9 +126,13 @@ class __$$_CartModelCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      regularPrice: null == regularPrice
-          ? _value.regularPrice
-          : regularPrice // ignore: cast_nullable_to_non_nullable
+      regular_price: null == regular_price
+          ? _value.regular_price
+          : regular_price // ignore: cast_nullable_to_non_nullable
+              as String,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
               as String,
       photo: null == photo
           ? _value.photo
@@ -130,7 +151,8 @@ class __$$_CartModelCopyWithImpl<$Res>
 class _$_CartModel implements _CartModel {
   _$_CartModel(
       {required this.id,
-      required this.regularPrice,
+      required this.regular_price,
+      required this.quantity,
       required this.photo,
       required this.namevi});
 
@@ -140,7 +162,9 @@ class _$_CartModel implements _CartModel {
   @override
   final String id;
   @override
-  final String regularPrice;
+  final String regular_price;
+  @override
+  final String quantity;
   @override
   final String photo;
   @override
@@ -148,7 +172,7 @@ class _$_CartModel implements _CartModel {
 
   @override
   String toString() {
-    return 'CartModel(id: $id, regularPrice: $regularPrice, photo: $photo, namevi: $namevi)';
+    return 'CartModel(id: $id, regular_price: $regular_price, quantity: $quantity, photo: $photo, namevi: $namevi)';
   }
 
   @override
@@ -157,15 +181,18 @@ class _$_CartModel implements _CartModel {
         (other.runtimeType == runtimeType &&
             other is _$_CartModel &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.regularPrice, regularPrice) ||
-                other.regularPrice == regularPrice) &&
+            (identical(other.regular_price, regular_price) ||
+                other.regular_price == regular_price) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity) &&
             (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.namevi, namevi) || other.namevi == namevi));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, regularPrice, photo, namevi);
+  int get hashCode =>
+      Object.hash(runtimeType, id, regular_price, quantity, photo, namevi);
 
   @JsonKey(ignore: true)
   @override
@@ -184,7 +211,8 @@ class _$_CartModel implements _CartModel {
 abstract class _CartModel implements CartModel {
   factory _CartModel(
       {required final String id,
-      required final String regularPrice,
+      required final String regular_price,
+      required final String quantity,
       required final String photo,
       required final String namevi}) = _$_CartModel;
 
@@ -194,7 +222,9 @@ abstract class _CartModel implements CartModel {
   @override
   String get id;
   @override
-  String get regularPrice;
+  String get regular_price;
+  @override
+  String get quantity;
   @override
   String get photo;
   @override

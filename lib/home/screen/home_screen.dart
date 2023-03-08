@@ -38,10 +38,7 @@ class _AppBar extends StatelessWidget {
 class _Product extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final products = ref.watch(productProvider);
-    print('products: ${products.listProducts}');
-
     return (products.listProducts != null && products.listProducts!.isNotEmpty)
         ? ValueListenableBuilder(
           valueListenable: Hive.box('favorites').listenable(),

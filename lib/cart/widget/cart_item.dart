@@ -1,14 +1,16 @@
 
+import 'package:demorivermod/cart/model/cart_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/getwidget.dart';
 
 import '../../color.dart';
-import '../../product_detail/adapter/Item_cart_hive.dart';
+import '../provider/cart_provider.dart';
 
-bool isChecked = true;
+
 class CartItem extends StatefulWidget {
   const CartItem({Key? key, required this.cart}) : super(key: key);
-  final ItemCartHive cart;
+  final CartModel cart;
 
   @override
   State<CartItem> createState() => _CartItemState();
@@ -19,18 +21,8 @@ class _CartItemState extends State<CartItem> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        GFCheckbox(
-          size: 28,
-          activeBgColor: GFColors.DANGER,
-          // type: GFCheckboxType.square,
-          onChanged: (value) {
-            setState(() {
-              isChecked = value;
-            });
-          },
-          value: isChecked,
-          inactiveIcon: null,
-        ),
+        _CheckBoxCart(widget.cart),
+
         const SizedBox(width: 10,),
         Expanded(
             child: Image.network(widget.cart.photo,height: 90,width: double.maxFinite,fit: BoxFit.contain,)),
@@ -66,7 +58,7 @@ class _CartItemState extends State<CartItem> {
                 border: Border.all(color: color_lqd10),
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: Center(child: Text("-",style: TextStyle(color: color_lqd10,),)),
+              child: _BuildBtnDec(widget.cart),
             ),
 
             Container(
@@ -89,11 +81,83 @@ class _CartItemState extends State<CartItem> {
                 border: Border.all(color: color_lqd10),
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: Center(child: Text("+",style: TextStyle(color: color_lqd10,),)),
+              child: _BuildBtnInc(widget.cart),
             ),
           ],
         ),
       ],
+    );
+  }
+}
+
+
+class _BuildBtnDec extends ConsumerWidget {
+  const _BuildBtnDec(
+      this.product, {
+        Key? key,
+      }) : super(key: key);
+
+  final CartModel product;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+        onTap: () {
+          ref.read(cartProvider.notifier).decreaseCart(item: product);
+        },
+        child: const Icon(
+          Icons.remove,
+          color: color_lqd10,
+          size: 22,
+        ));
+  }
+}
+
+class _BuildBtnInc extends ConsumerWidget {
+  const _BuildBtnInc(
+      this.product, {
+        Key? key,
+      }) : super(key: key);
+
+  final CartModel product;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+        onTap: () {
+          ref.read(cartProvider.notifier).increaseCart(item: product);
+        },
+        child: const Icon(
+          Icons.add,
+          color: color_lqd10,
+          size: 22,
+        ));
+  }
+}
+
+class _CheckBoxCart extends ConsumerWidget {
+  const _CheckBoxCart(
+      this.product, {
+        Key? key,
+      }) : super(key: key);
+
+  final CartModel product;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final stateCart =  ref.watch(cartProvider);
+    return GFCheckbox(
+      size: 28,
+      activeBgColor: GFColors.DANGER,
+      type: GFCheckboxType.square,
+      onChanged: (value) {
+        // setState(() {
+        //   isChecked = value;
+        // });
+        ref.read(cartProvider.notifier).listCheckCart(id: product.id);
+      },
+      value: (stateCart.selectItems!=null) ? (stateCart.selectItems!.contains(product.id) ? true : false) : false,
+      inactiveIcon: null,
     );
   }
 }

@@ -2,14 +2,18 @@
 import '../model/cart_model.dart';
 
 class CartState {
-  final List<dynamic>? listCarts;
+  List<String>? selectItems;
+  final List<CartModel>? listCarts;
   final bool isLoading;
-  CartState({this.listCarts, this.isLoading = true});
+  final double totalPrice;
+  CartState({this.selectItems, this.listCarts,  this.totalPrice = 0, this.isLoading = true});
   CartState copyWith(
-      {List<CartModel>? listCarts, bool? isLoading}) {
+      {List<CartModel>? listCarts, List<String>? selectItems, bool? isLoading, double? totalPrice}) {
     return CartState(
+        selectItems: selectItems ?? this.selectItems,
         isLoading: isLoading ?? this.isLoading,
-        listCarts: listCarts ?? this.listCarts);
+        listCarts: listCarts ?? this.listCarts,
+    totalPrice: totalPrice ?? this.totalPrice);
   }
 }
 
