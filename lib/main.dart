@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'product_detail/adapter/Item_cart_hive.dart';
-
 
 
 
@@ -19,7 +17,6 @@ main() async {
 
   Hive.registerAdapter(ItemCartHiveAdapter());
   await Hive.openBox('box_listCart');
-
   runApp(const ProviderScope(child: MyApp()));
   // runApp(MyApp());
 }
@@ -32,9 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Flutter Demo',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,

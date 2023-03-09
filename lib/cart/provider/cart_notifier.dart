@@ -11,7 +11,6 @@ class CartControler  extends StateNotifier<CartState> {
   }
   late final _boxCart;
 
-
   initCart() async {
     state = state.copyWith(isLoading: true);
     _boxCart = Hive.box('box_listCart');
@@ -33,15 +32,28 @@ class CartControler  extends StateNotifier<CartState> {
   }
 
   int totalItemsCart() {
-    return (state.listCarts!.isNotEmpty)
-        ? state.listCarts!.map((e) => int.parse(e.quantity)).reduce((a, b) => a + b)
+    List<CartModel> newsList = [];
+    for (CartModel cartItem in state.listCarts!) {
+      if (state.selectItems!.contains(cartItem.id)) {
+        newsList.add(cartItem);
+      }
+    }
+    return (newsList!.isNotEmpty)
+        ? newsList!.map((e) => int.parse(e.quantity)).reduce((a, b) => a + b)
         : 0;
   }
 
 
   _updateTotalPrice() {
-    int total = (state.listCarts!.isNotEmpty)
-        ? state.listCarts!.map((e) {
+    List<CartModel> newsList = [];
+    for (CartModel cartItem in state.listCarts!) {
+      if (state.selectItems!.contains(cartItem.id)) {
+        newsList.add(cartItem);
+      }
+    }
+
+    int total = (newsList!.isNotEmpty)
+        ? newsList!.map((e) {
           final total = int.parse(e.regular_price)*int.parse(e.quantity);
           return total;
     }).reduce((a, b) => a + b)
@@ -62,6 +74,7 @@ class CartControler  extends StateNotifier<CartState> {
       curList.add(id);
     }
     state = state.copyWith(selectItems: curList);
+     _updateTotalPrice();
   }
 
   _findIndexList({required String id}){
@@ -76,6 +89,7 @@ class CartControler  extends StateNotifier<CartState> {
       }
     }
     state = state.copyWith(selectItems: newList);
+    _updateTotalPrice();
   }
 
   addCart({required CartModel item, int quantity = 1}) async {
@@ -156,5 +170,4 @@ class CartControler  extends StateNotifier<CartState> {
     state = state.copyWith(isLoading: false);
     _updateTotalPrice();
   }
-
 }
