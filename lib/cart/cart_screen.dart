@@ -136,7 +136,7 @@ class _BuildListCart extends ConsumerWidget {
     return listCarts.length > 0
         ? ListView.separated(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics:const NeverScrollableScrollPhysics(),
           itemCount: listCarts.length,
           separatorBuilder: (context, index) => const Divider(height: 30),
           itemBuilder: (context, index) {

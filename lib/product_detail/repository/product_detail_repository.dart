@@ -10,15 +10,19 @@ class ProductDetailService{
   static final instance = ProductDetailService._();
   final url  = ApiConstants.BASE_URL + ApiConstants.PATH_RANDOM_4;
 
-  Future<ProductDetailModel> getProductDetail(int id) async {
-    List<ProductDetailModel>? listProducts = [];
-    final response = await Dio().get('$url?id=$id');
+  Future<ProductDetailModel> getProductDetail(String id) async {
+    // List<ProductDetailModel>? listProducts = [];
+    try{
+      final response = await Dio().get('$url?id=$id');
 
-    if (response.statusCode == 200) {
-      final mapResponse = jsonDecode(response.data)['data'][0];
-      listProducts.add(ProductDetailModel.fromJson(mapResponse));
+      if (response.statusCode == 200) {
+        final mapResponse = jsonDecode(response.data)['data'][0];
+        return ProductDetailModel.fromJson(mapResponse);
+      }else{
+        throw Exception('Failed to load product details');
+      }
+    } catch (error){
+      throw Exception('Failed to connect to the server');
     }
-    return listProducts[0];
   }
-
 }

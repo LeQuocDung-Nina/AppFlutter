@@ -1,44 +1,56 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Item_cart_hive.dart';
+part of 'item_favorites_hive.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ItemCartHiveAdapter extends TypeAdapter<ItemCartHive> {
+class ItemFavHiveAdapter extends TypeAdapter<ItemFavHive> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  ItemCartHive read(BinaryReader reader) {
+  ItemFavHive read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ItemCartHive(
+    return ItemFavHive(
       id: fields[0] as String,
       namevi: fields[1] as String,
-      regular_price: fields[2] as String,
-      quantity: fields[3] as String,
-      photo: fields[4] as String,
+      descvi: fields[2] as String,
+      regular_price: fields[3] as String,
+      sale_price: fields[4] as String,
+      discount: fields[5] as String,
+      id_list: fields[6] as String,
+      photo: fields[7] as String,
+      isFav: fields[8] as bool?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, ItemCartHive obj) {
+  void write(BinaryWriter writer, ItemFavHive obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.namevi)
       ..writeByte(2)
-      ..write(obj.regular_price)
+      ..write(obj.descvi)
       ..writeByte(3)
-      ..write(obj.quantity)
+      ..write(obj.regular_price)
       ..writeByte(4)
-      ..write(obj.photo);
+      ..write(obj.sale_price)
+      ..writeByte(5)
+      ..write(obj.discount)
+      ..writeByte(6)
+      ..write(obj.id_list)
+      ..writeByte(7)
+      ..write(obj.photo)
+      ..writeByte(8)
+      ..write(obj.isFav);
   }
 
   @override
@@ -47,7 +59,7 @@ class ItemCartHiveAdapter extends TypeAdapter<ItemCartHive> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ItemCartHiveAdapter &&
+      other is ItemFavHiveAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

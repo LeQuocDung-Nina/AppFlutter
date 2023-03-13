@@ -13,7 +13,9 @@ class CartControler  extends StateNotifier<CartState> {
 
   initCart() async {
     state = state.copyWith(isLoading: true);
-    _boxCart = Hive.box('box_listCart');
+
+    _boxCart = Hive.box('box_listCart2');
+
     final listCarts = _boxCart.toMap();
     List<CartModel> listTemp = [];
     if (listCarts.isNotEmpty && listCarts.length > 0) {
@@ -102,25 +104,13 @@ class CartControler  extends StateNotifier<CartState> {
     } else {
       state.listCarts!.add(item);
     }
+
     updateCartLocalStorage();
     state = state.copyWith(isLoading: false);
     _updateTotalPrice();
   }
 
-  updateCartLocalStorage() async {
-    await _boxCart.clear();
-    if (state.listCarts!.isNotEmpty) {
-      for (var element in state.listCarts!) {
-        ItemCartHive item = ItemCartHive(
-            id: element.id,
-            namevi: element.namevi,
-            quantity: element.quantity,
-            regular_price: element.regular_price,
-            photo: element.photo!);
-        _boxCart.add(item);
-      }
-    }
-  }
+
 
   deleteCart({required CartModel item}) async {
     state = state.copyWith(isLoading: true);
@@ -169,5 +159,20 @@ class CartControler  extends StateNotifier<CartState> {
     }
     state = state.copyWith(isLoading: false);
     _updateTotalPrice();
+  }
+
+  updateCartLocalStorage() async {
+    await _boxCart.clear();
+    if (state.listCarts!.isNotEmpty) {
+      for (var element in state.listCarts!) {
+        ItemCartHive item = ItemCartHive(
+        id: element.id,
+        namevi: element.namevi,
+        quantity: element.quantity,
+        regular_price: element.regular_price,
+        photo: element.photo!);
+        _boxCart.add(item);
+      }
+    }
   }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:go_router/go_router.dart';
 
-import '../color.dart';
-import '../counter.dart';
-import '../home/screen/home_screen.dart';
+import '../../color.dart';
+import '../../counter.dart';
+import '../../home/screen/home_screen.dart';
 
 
 var indexProvider = StateProvider<int> ((ref) => 0);

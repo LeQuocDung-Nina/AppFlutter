@@ -1,5 +1,4 @@
 
-
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:demorivermod/home/model/slideshow_model.dart';
@@ -9,10 +8,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:searchfield/searchfield.dart';
-
 import '../../color.dart';
 import '../model/categorie_model.dart';
-import '../model/home_model.dart';
 import '../provider/home_provider.dart';
 import '../widget/appbarhome.dart';
 import '../widget/categorie.dart';
@@ -20,6 +17,7 @@ import '../widget/product_home_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -268,6 +266,7 @@ class _TitleMain extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children:  [
@@ -289,9 +288,8 @@ class _Product extends ConsumerWidget {
     final products = ref.watch(productProvider);
     return (products.listProducts != null && products.listProducts!.isNotEmpty)
         ? ValueListenableBuilder(
-          valueListenable: Hive.box('favorites').listenable(),
+          valueListenable: Hive.box('favorites_v5').listenable(),
           builder: (BuildContext context, box, Widget? child) {
-
             return AlignedGridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

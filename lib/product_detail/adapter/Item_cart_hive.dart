@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'Item_cart_hive.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class ItemCartHive {
   ItemCartHive({required this.id, required this.namevi, required this.regular_price, required this.quantity, required this.photo});
 

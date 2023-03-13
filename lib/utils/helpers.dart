@@ -8,7 +8,7 @@ import '../product_detail/adapter/Item_cart_hive.dart';
 
 class Helpers{
   static Future<bool> updateFav({required String id, required Box boxFav})  async {
-    var strFav = boxFav.get('list_product_fav');
+    var strFav = boxFav.get('list_product_fav') ?? '';
     List<String> list = strFav!=null ? strFav.split(',') : [];
     if(list.isNotEmpty){
       var flag = true;
