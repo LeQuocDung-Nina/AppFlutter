@@ -50,7 +50,13 @@ dependencies:
   build_runner: ^2.3.3
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
+  pdf: ^3.9.0
+  printing: ^5.10.1
+#  open_file: ^3.2.1
+  image_picker: ^0.8.7
+  file_picker: ^5.2.6
 
+#  pdf_flutter: ^1.1.4
 
 dev_dependencies:
   flutter_test:
@@ -107,3 +113,4 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/images/
+

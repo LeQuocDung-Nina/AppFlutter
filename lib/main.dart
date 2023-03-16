@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'account/adapter/user_hive.dart';
 import 'product_detail/adapter/Item_cart_hive.dart';
 
 
@@ -15,6 +16,9 @@ main() async {
 
   Hive.registerAdapter(ItemCartHiveAdapter());
   await Hive.openBox('box_listCart2');
+
+  Hive.registerAdapter(UserHiveAdapter());
+  await Hive.openBox('user');
   runApp(const ProviderScope(child: MyApp()));
   // runApp(MyApp());
 }

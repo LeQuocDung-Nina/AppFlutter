@@ -1,16 +1,22 @@
+import 'package:demorivermod/home/model/home_model.dart';
+
 import '../model/product_detail_model.dart';
 
 class ProductDetailState {
-  final List<dynamic>? listProductDetails;
+  final List<ProductDetailModel>? listProductDetails;
+  final List<ProductDetailModel>? listFav;
   final bool isLoading;
 
-  ProductDetailState({this.listProductDetails, this.isLoading = true});
+  ProductDetailState({this.listProductDetails, List<ProductDetailModel>? listFav, this.isLoading = true})
+      : listFav = listFav ?? [];
 
   ProductDetailState copyWith(
-      {List<ProductDetailModel>? listProductDetails, bool? isLoading}) {
+      {List<ProductDetailModel>? listProductDetails, List<ProductDetailModel>? listFav, bool? isLoading}) {
     return ProductDetailState(
         isLoading: isLoading ?? this.isLoading,
-        listProductDetails: listProductDetails ?? this.listProductDetails);
+        listFav: listFav ?? this.listFav,
+        listProductDetails: listProductDetails ?? this.listProductDetails
+    );
   }
 }
 

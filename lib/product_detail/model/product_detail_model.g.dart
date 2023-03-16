@@ -17,6 +17,7 @@ _$_ProductDetailModel _$$_ProductDetailModelFromJson(
       sale_price: json['sale_price'] as String,
       discount: json['discount'] as String,
       id_list: json['id_list'] as String,
+      isFav: json['isFav'] ?? false,
     );
 
 Map<String, dynamic> _$$_ProductDetailModelToJson(
@@ -30,4 +31,5 @@ Map<String, dynamic> _$$_ProductDetailModelToJson(
       'sale_price': instance.sale_price,
       'discount': instance.discount,
       'id_list': instance.id_list,
+      'isFav': instance.isFav,
     };

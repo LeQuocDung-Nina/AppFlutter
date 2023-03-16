@@ -13,6 +13,7 @@ class ProductDetailModel with _$ProductDetailModel {
     required String sale_price,
     required String discount,
     required String id_list,
+    @Default(false) isFav,
   }) = _ProductDetailModel;
 
   factory ProductDetailModel.fromJson(Map<String, Object?> json)

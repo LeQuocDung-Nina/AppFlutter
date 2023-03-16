@@ -6,6 +6,8 @@ import 'package:getwidget/getwidget.dart';
 import '../../cart/model/cart_model.dart';
 import '../../cart/provider/cart_provider.dart';
 import '../../color.dart';
+import '../../home/model/home_model.dart';
+import '../../home/provider/home_provider.dart';
 import '../model/product_detail_model.dart';
 import '../provider/product_detail_provider.dart';
 import '../widget/appbar_detail.dart';
@@ -34,7 +36,7 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
 
     final productDetailState = ref.watch(productDetailProvider(widget.idProduct));
     final product = productDetailState.listProductDetails?.first;
-
+    final bool isFav = ref.read(productProvider).listFavorites?.any((fav) => fav.id == product?.id) ?? false;
     return Scaffold(
       appBar: AppBar(
         title: const AppbarProductDetail(),
@@ -50,17 +52,42 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
               padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 25),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                          flex: 3,
-                          child: Text(product.namevi,style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 23,color: color_lqd8),)),
-                      const Expanded(
-                          flex: 1,
-                          child: Icon(Icons.favorite_border,color: color_lqd1,))
-                    ],
+                  ListTile(
+                    contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                    title: Text(product.namevi.toString(),style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 23,color: color_lqd8)),
+                    trailing: IconButton(
+                      onPressed: () async {
+                        ref.read(productProvider.notifier).saveProductFav(
+                            productModel: ProductModel(
+                              id: product.id,
+                              descvi: product.descvi,
+                              discount: product.discount,
+                              id_list: product.id_list,
+                              namevi: product.namevi,
+                              photo: product.photo,
+                              regular_price: product.regular_price,
+                              sale_price: product.sale_price,
+                              isFav: product.isFav,
+                            ));
+
+                        setState(() {
+                          if(isFav){
+                            const snackBar = SnackBar(content: Text("Bỏ thích sản phẩm"));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }else{
+
+                            const snackBar = SnackBar(content: Text("Đã thích sản phẩm"));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }
+                        });
+                      },
+                      icon: Icon(
+                        (isFav) ? Icons.favorite : Icons.favorite_border,
+                        color: color_lqd1,
+                      ),
+
+                      // icon: const Icon(Icons.favorite_border,color: color_lqd1,),
+                    ),
                   ),
                   const SizedBox(height: 10,),
                   Row(
@@ -197,6 +224,8 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
       : const Center(child: Text('Chưa có dữ liệu'))
     );
   }
+
+
 }
 
 class _BuildAddCartWidget extends ConsumerWidget {

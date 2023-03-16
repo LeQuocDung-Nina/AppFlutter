@@ -28,6 +28,7 @@ mixin _$ProductDetailModel {
   String get sale_price => throw _privateConstructorUsedError;
   String get discount => throw _privateConstructorUsedError;
   String get id_list => throw _privateConstructorUsedError;
+  dynamic get isFav => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +50,8 @@ abstract class $ProductDetailModelCopyWith<$Res> {
       String regular_price,
       String sale_price,
       String discount,
-      String id_list});
+      String id_list,
+      dynamic isFav});
 }
 
 /// @nodoc
@@ -73,6 +75,7 @@ class _$ProductDetailModelCopyWithImpl<$Res, $Val extends ProductDetailModel>
     Object? sale_price = null,
     Object? discount = null,
     Object? id_list = null,
+    Object? isFav = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -107,6 +110,10 @@ class _$ProductDetailModelCopyWithImpl<$Res, $Val extends ProductDetailModel>
           ? _value.id_list
           : id_list // ignore: cast_nullable_to_non_nullable
               as String,
+      isFav: freezed == isFav
+          ? _value.isFav
+          : isFav // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 }
@@ -127,7 +134,8 @@ abstract class _$$_ProductDetailModelCopyWith<$Res>
       String regular_price,
       String sale_price,
       String discount,
-      String id_list});
+      String id_list,
+      dynamic isFav});
 }
 
 /// @nodoc
@@ -149,6 +157,7 @@ class __$$_ProductDetailModelCopyWithImpl<$Res>
     Object? sale_price = null,
     Object? discount = null,
     Object? id_list = null,
+    Object? isFav = freezed,
   }) {
     return _then(_$_ProductDetailModel(
       id: null == id
@@ -183,6 +192,7 @@ class __$$_ProductDetailModelCopyWithImpl<$Res>
           ? _value.id_list
           : id_list // ignore: cast_nullable_to_non_nullable
               as String,
+      isFav: freezed == isFav ? _value.isFav! : isFav,
     ));
   }
 }
@@ -198,7 +208,8 @@ class _$_ProductDetailModel implements _ProductDetailModel {
       required this.regular_price,
       required this.sale_price,
       required this.discount,
-      required this.id_list});
+      required this.id_list,
+      this.isFav = false});
 
   factory _$_ProductDetailModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDetailModelFromJson(json);
@@ -219,10 +230,13 @@ class _$_ProductDetailModel implements _ProductDetailModel {
   final String discount;
   @override
   final String id_list;
+  @override
+  @JsonKey()
+  final dynamic isFav;
 
   @override
   String toString() {
-    return 'ProductDetailModel(id: $id, namevi: $namevi, descvi: $descvi, photo: $photo, regular_price: $regular_price, sale_price: $sale_price, discount: $discount, id_list: $id_list)';
+    return 'ProductDetailModel(id: $id, namevi: $namevi, descvi: $descvi, photo: $photo, regular_price: $regular_price, sale_price: $sale_price, discount: $discount, id_list: $id_list, isFav: $isFav)';
   }
 
   @override
@@ -240,13 +254,23 @@ class _$_ProductDetailModel implements _ProductDetailModel {
                 other.sale_price == sale_price) &&
             (identical(other.discount, discount) ||
                 other.discount == discount) &&
-            (identical(other.id_list, id_list) || other.id_list == id_list));
+            (identical(other.id_list, id_list) || other.id_list == id_list) &&
+            const DeepCollectionEquality().equals(other.isFav, isFav));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, namevi, descvi, photo,
-      regular_price, sale_price, discount, id_list);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      namevi,
+      descvi,
+      photo,
+      regular_price,
+      sale_price,
+      discount,
+      id_list,
+      const DeepCollectionEquality().hash(isFav));
 
   @JsonKey(ignore: true)
   @override
@@ -272,7 +296,8 @@ abstract class _ProductDetailModel implements ProductDetailModel {
       required final String regular_price,
       required final String sale_price,
       required final String discount,
-      required final String id_list}) = _$_ProductDetailModel;
+      required final String id_list,
+      final dynamic isFav}) = _$_ProductDetailModel;
 
   factory _ProductDetailModel.fromJson(Map<String, dynamic> json) =
       _$_ProductDetailModel.fromJson;
@@ -293,6 +318,8 @@ abstract class _ProductDetailModel implements ProductDetailModel {
   String get discount;
   @override
   String get id_list;
+  @override
+  dynamic get isFav;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDetailModelCopyWith<_$_ProductDetailModel> get copyWith =>

@@ -37,6 +37,7 @@ class _ProductItemState extends ConsumerState<ProductItem> {
 
     final bool isFav = ref.read(productProvider).listFavorites?.any((fav) => fav.id == widget.product.id) ?? false;
 
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,10 +72,11 @@ class _ProductItemState extends ConsumerState<ProductItem> {
 
                 setState(() {
                   if(isFav){
-                    const snackBar = SnackBar(content: Text("Đã thích sản phẩm"));
+                    const snackBar = SnackBar(content: Text("Bỏ thích sản phẩm"));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }else{
-                    const snackBar = SnackBar(content: Text("Bỏ thích sản phẩm"));
+
+                    const snackBar = SnackBar(content: Text("Đã thích sản phẩm"));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 });

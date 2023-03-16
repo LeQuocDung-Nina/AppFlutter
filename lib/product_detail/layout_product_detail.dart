@@ -23,3 +23,5 @@ class LayoutProductDetail extends StatelessWidget {
     return ProductDetail(idProduct: id);
   }
 }
+
+

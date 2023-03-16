@@ -82,8 +82,6 @@ class ProductControler extends StateNotifier<ProductState> {
 }
 
 
-
-
 class SlideshowControler extends StateNotifier<SlideshowState> {
   SlideshowControler() : super(SlideshowState()) {
     _initSlideshow();

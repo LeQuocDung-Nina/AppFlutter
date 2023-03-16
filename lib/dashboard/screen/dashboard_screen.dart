@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:go_router/go_router.dart';
-
+import '../../account/layout_account.dart';
 import '../../color.dart';
-import '../../counter.dart';
-import '../../home/screen/home_screen.dart';
+import '../../favourite/layout_favorite.dart';
+import '../../home/layout_home.dart';
+import '../../order_list/layout_order_list.dart';
+
 
 
 var indexProvider = StateProvider<int> ((ref) => 0);
@@ -17,14 +18,16 @@ class DashboardScreen extends ConsumerWidget {
     return Scaffold(
 
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 0,horizontal: 0),
+        padding: const EdgeInsets.symmetric(vertical: 0,horizontal: 0),
         child: IndexedStack(
           index: ref.watch(indexProvider),
           children: const [
-            HomeScreen(),
-            Counter(),
-            Text("data 3"),
+            LayoutHome(),
+            LayoutFavourite(),
             Text("data 4"),
+            LayoutAccount(),
+            // LayoutLogin(),
+            LayoutOrderList(),
           ],
         ),
       ),
@@ -45,6 +48,7 @@ class DashboardScreen extends ConsumerWidget {
           BottomNavigationBarItem(label: 'Favourite', icon: Icon(Icons.favorite)),
           BottomNavigationBarItem(label: 'Notification', icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(label: 'Account', icon: Icon(Icons.person_outline)),
+          BottomNavigationBarItem(label: 'PDF', icon: Icon(Icons.picture_as_pdf)),
         ],
       ),
     );
